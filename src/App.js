@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import UserCard from "./UserCard";
+import {connect} from 'react-redux'
+import AddUser from "./AddUser";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component{
+  render(){
+    return (
+      <div className="container mt-4">
+        {
+          this.props.localState.users.map( (user) =>{
+            return <UserCard  key={user.id} user ={user}/>
+          })
+        }
+
+        <hr/>
+        <AddUser />
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    localState: state
+  }
+}
+
+export default connect(mapStateToProps)(App);
